@@ -45,7 +45,7 @@ export default function GiftSection() {
         transition={{ duration: 0.6 }}
         className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
       >
-        Open Me 🎁
+        Gift 🎁
       </motion.h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
