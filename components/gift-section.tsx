@@ -64,25 +64,39 @@ export default function GiftSection() {
   }, [openedGift]);
 
   // Trigger love bombs when opening gift with images
-  useEffect(() => {
-    const currentGift = gifts.find((g) => g.id === openedGift);
-    if (currentGift?.images && openedGift !== null) {
-      setShowLoveBombs(true);
-      // Remove love bombs after animation completes
-      const timeout = setTimeout(() => {
-        setShowLoveBombs(false);
-      }, 4000);
-      return () => clearTimeout(timeout);
-    }
-  }, [openedGift]);
+  // useEffect(() => {
+  //   const currentGift = gifts.find((g) => g.id === openedGift);
+  //   if (currentGift?.images && openedGift !== null) {
+  //     setShowLoveBombs(true);
+  //     const timeout = setTimeout(() => {
+  //       setShowLoveBombs(false);
+  //     }, 4000);
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }, [openedGift, loveBombKey]);
 
   const handleGiftClick = (giftId: number) => {
     if (openedGift === giftId) {
+      // Closing the gift - just close it normally, no bombs
       setOpenedGift(null);
       setCurrentImageIndex(0);
+      setShowLoveBombs(false); // Ensure bombs are off when closing
     } else {
+      // Opening a gift
       setOpenedGift(giftId);
       setCurrentImageIndex(0);
+
+      // Trigger love bombs immediately for gifts with images
+      const currentGift = gifts.find((g) => g.id === giftId);
+      if (currentGift?.images) {
+        setShowLoveBombs(true);
+        setLoveBombKey((prev) => prev + 1); // Force re-render of bombs
+
+        // Turn off bombs after animation
+        setTimeout(() => {
+          setShowLoveBombs(false);
+        }, 4000);
+      }
     }
   };
 
