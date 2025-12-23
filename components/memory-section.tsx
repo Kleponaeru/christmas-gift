@@ -1,40 +1,44 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 interface Memory {
-  id: number
-  title: string
-  description: string
-  icon: string
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
 }
 
 const memories: Memory[] = [
   {
     id: 1,
     title: "Cozy Nights",
-    description: "Wrapped in blankets, watching the snow fall outside. Just us, our love, and hot chocolate.",
+    description:
+      "Wrapped in blankets, watching the snow fall outside. Just us, our love, and hot chocolate.",
     icon: "☕",
   },
   {
     id: 2,
     title: "Laughter & Joy",
-    description: "Your laugh is my favorite sound. Every moment with you is filled with genuine happiness.",
+    description:
+      "Your laugh is my favorite sound. Every moment with you is filled with genuine happiness.",
     icon: "😄",
   },
   {
     id: 3,
     title: "Quiet Moments",
-    description: "Sometimes the best moments are the quiet ones where we just hold each other close.",
+    description:
+      "Sometimes the best moments are the quiet ones where we just hold each other close.",
     icon: "🤫",
   },
   {
     id: 4,
     title: "Forever Plans",
-    description: "Dreaming about our future together and all the beautiful memories we'll create.",
+    description:
+      "Dreaming about our future together and all the beautiful memories we'll create.",
     icon: "✨",
   },
-]
+];
 
 export default function MemorySection() {
   return (
@@ -43,7 +47,7 @@ export default function MemorySection() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-red-600 dark:text-red-400"
+        className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
       >
         Our Memories ❤️
       </motion.h2>
@@ -59,11 +63,15 @@ export default function MemorySection() {
             className="bg-white dark:bg-slate-800 rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow border border-red-100 dark:border-red-900"
           >
             <div className="text-5xl mb-4">{memory.icon}</div>
-            <h3 className="text-2xl font-serif font-bold mb-3 text-green-600 dark:text-green-400">{memory.title}</h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{memory.description}</p>
+            <h3 className="text-2xl font-serif font-bold mb-3 text-green-600 dark:text-green-400">
+              {memory.title}
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+              {memory.description}
+            </p>
           </motion.div>
         ))}
       </div>
     </section>
-  )
+  );
 }

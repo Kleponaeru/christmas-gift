@@ -1,49 +1,41 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSnowPreset } from "@tsparticles/preset-snow";
 
-interface Snowflake {
-  id: number;
-  left: number;
-  delay: number;
-  duration: number;
-  size: number;
-}
+import type { Container, Engine } from "@tsparticles/engine";
 
 export default function SnowEffect() {
-  const [snowflakes, setSnowflakes] = useState<Snowflake[]>([]);
+  const [init, setInit] = useState(false);
 
   useEffect(() => {
-    const flakes: Snowflake[] = [];
-    for (let i = 0; i < 50; i++) {
-      flakes.push({
-        id: i,
-        left: Math.random() * 100,
-        delay: Math.random() * 5,
-        duration: 10 + Math.random() * 5,
-        size: 4 + Math.random() * 6,
-      });
-    }
-    setSnowflakes(flakes);
+    initParticlesEngine(async (engine: Engine) => {
+      // load snow preset
+      await loadSnowPreset(engine);
+    }).then(() => {
+      setInit(true);
+    });
   }, []);
+
+  const particlesLoaded = async (container?: Container): Promise<void> => {
+    console.log(container);
+  };
 
   return (
     <>
-      {snowflakes.map((flake) => (
-        <div
-          key={flake.id}
-          className="snowflake"
-          style={{
-            left: `${flake.left}%`,
-            width: `${flake.size}px`,
-            height: `${flake.size}px`,
-            animationDelay: `${flake.delay}s`,
-            animationDuration: `${flake.duration}s`,
+      {init && (
+        <Particles
+          id="tsparticles"
+          particlesLoaded={particlesLoaded}
+          options={{
+            preset: "snow",
+            background: {
+              opacity: 0,
+            },
           }}
-        >
-          ❄️
-        </div>
-      ))}
+        />
+      )}
     </>
   );
 }

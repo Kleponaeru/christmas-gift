@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Heart } from "lucide-react"
+import { motion } from "framer-motion";
+import { Heart } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -16,9 +16,9 @@ export default function Hero() {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-5xl md:text-7xl font-serif font-bold mb-6 text-red-600 dark:text-red-400"
+          className="text-5xl md:text-7xl font-serif font-bold mb-6 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
         >
-          Merry Christmas
+          Merry Christmas CIA!
         </motion.h1>
 
         <motion.div
@@ -33,17 +33,18 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8"
+          className="text-lg md:text-xl text-white dark:text-gray-300 leading-relaxed mb-8"
         >
-          This Christmas, I wanted to create something special just for you. A digital gift filled with memories, love,
-          and all the warmth of the season.
+          This Christmas, I wanted to create something special just for you. A
+          digital gift filled with memories, love, and all the warmth of the
+          season.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="flex items-center justify-center gap-2 text-green-600 dark:text-green-400"
+          className="flex items-center justify-center gap-2 text-white dark:text-white"
         >
           <Heart className="w-5 h-5" />
           <span>Scroll down to explore</span>
@@ -51,5 +52,5 @@ export default function Hero() {
         </motion.div>
       </motion.div>
     </section>
-  )
+  );
 }
