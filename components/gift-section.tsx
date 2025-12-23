@@ -14,9 +14,9 @@ const gifts: Gift[] = [
   {
     id: 1,
     emoji: "🎁",
-    title: "First Date",
+    title: "Santa's Gift",
     message:
-      "I still remember the butterflies I felt when we first met. Every moment with you since has been a gift.",
+      "This gift is a symbol of my love and appreciation for you. May it bring you joy and warmth this Christmas.",
   },
   {
     id: 2,
@@ -45,7 +45,7 @@ export default function GiftSection() {
         transition={{ duration: 0.6 }}
         className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
       >
-        Open Your Gifts 🎁
+        Open Me 🎁
       </motion.h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

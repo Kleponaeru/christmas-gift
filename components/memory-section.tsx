@@ -13,8 +13,7 @@ const memories: Memory[] = [
   {
     id: 1,
     title: "Cozy Nights",
-    description:
-      "Wrapped in blankets, watching the snow fall outside. Just us, our love, and hot chocolate.",
+    description: "Wrapped in blankets, talking through the night.",
     icon: "☕",
   },
   {
@@ -28,7 +27,7 @@ const memories: Memory[] = [
     id: 3,
     title: "Quiet Moments",
     description:
-      "Sometimes the best moments are the quiet ones where we just hold each other close.",
+      "Sometimes the best moments are the quiet ones where we just next to each other close.",
     icon: "🤫",
   },
   {

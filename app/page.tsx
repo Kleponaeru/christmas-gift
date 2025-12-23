@@ -8,6 +8,7 @@ import MemorySection from "@/components/memory-section";
 import CharacterSection from "@/components/character-section";
 import FinalMessage from "@/components/final-message";
 import SnowEffect from "@/components/snow-effect";
+import SnowGlobe from "@/components/snow-globe";
 
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
