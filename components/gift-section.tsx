@@ -2,12 +2,15 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import SnowGlobe from "./snow-globe";
 
 interface Gift {
   id: number;
   emoji: string;
   title: string;
   message: string;
+  image?: string; // Optional image URL
+  showSnowGlobe?: boolean; // Flag to show snow globe instead
 }
 
 const gifts: Gift[] = [
@@ -17,6 +20,7 @@ const gifts: Gift[] = [
     title: "Santa's Gift",
     message:
       "This gift is a symbol of my love and appreciation for you. May it bring you joy and warmth this Christmas.",
+    showSnowGlobe: true, // This gift will show the snow globe
   },
   {
     id: 2,
@@ -24,6 +28,7 @@ const gifts: Gift[] = [
     title: "Your Smile",
     message:
       "You have the most beautiful smile that lights up my entire world. Thank you for sharing it with me.",
+    image: "/path/to/your/image.jpg", // Optional: add image path
   },
   {
     id: 3,
@@ -69,32 +74,64 @@ export default function GiftSection() {
               }}
               className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-all hover:bg-white/15 cursor-pointer min-h-48 flex flex-col items-center justify-center"
             >
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{
-                  repeat: Number.POSITIVE_INFINITY,
-                  duration: 1.5,
-                  delay: index * 0.3,
-                }}
-                className="text-6xl mb-4"
-              >
-                {openedGift === gift.id ? "✨" : gift.emoji}
-              </motion.div>
-
               {openedGift === gift.id ? (
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.4 }}
-                  className="text-white"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="w-full"
                 >
-                  <h3 className="text-2xl font-serif font-bold mb-4">
-                    {gift.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed">{gift.message}</p>
+                  {/* Show Snow Globe if specified */}
+                  {gift.showSnowGlobe ? (
+                    <div className="flex flex-col items-center text-white">
+                      <div className="scale-[0.35] md:scale-50 -my-32 md:-my-24">
+                        <SnowGlobe />
+                      </div>
+                      <h3 className="text-2xl font-serif font-bold mb-4">
+                        {gift.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed">{gift.message}</p>
+                    </div>
+                  ) : gift.image ? (
+                    /* Show image if provided */
+                    <div className="flex flex-col items-center text-white">
+                      <img
+                        src={gift.image}
+                        alt={gift.title}
+                        className="w-full max-w-sm rounded-lg mb-4 shadow-lg"
+                      />
+                      <h3 className="text-2xl font-serif font-bold mb-4">
+                        {gift.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed">{gift.message}</p>
+                    </div>
+                  ) : (
+                    /* Show default message */
+                    <div className="text-white">
+                      <div className="text-6xl mb-4">✨</div>
+                      <h3 className="text-2xl font-serif font-bold mb-4">
+                        {gift.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed">{gift.message}</p>
+                    </div>
+                  )}
                 </motion.div>
               ) : (
-                <p className="text-white font-serif text-xl">{gift.title}</p>
+                /* Closed gift view */
+                <>
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{
+                      repeat: Number.POSITIVE_INFINITY,
+                      duration: 1.5,
+                      delay: index * 0.3,
+                    }}
+                    className="text-6xl mb-4"
+                  >
+                    {gift.emoji}
+                  </motion.div>
+                  <p className="text-white font-serif text-xl">{gift.title}</p>
+                </>
               )}
             </motion.div>
           </motion.div>
