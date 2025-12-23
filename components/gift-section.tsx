@@ -67,7 +67,7 @@ export default function GiftSection() {
                 duration: 2,
                 delay: index * 0.3,
               }}
-              className="bg-gradient-to-b from-red-400 to-red-600 dark:from-red-600 dark:to-red-800 rounded-lg p-8 text-center shadow-lg hover:shadow-2xl transition-shadow min-h-48 flex flex-col items-center justify-center"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-all hover:bg-white/15 cursor-pointer min-h-48 flex flex-col items-center justify-center"
             >
               <motion.div
                 animate={{ scale: [1, 1.1, 1] }}

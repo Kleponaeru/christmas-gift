@@ -60,13 +60,13 @@ export default function MemorySection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1, duration: 0.6 }}
             whileHover={{ y: -5 }}
-            className="bg-white dark:bg-slate-800 rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow border border-red-100 dark:border-red-900"
+            className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-all hover:bg-white/15 cursor-pointer min-h-48 flex flex-col items-center justify-center"
           >
             <div className="text-5xl mb-4">{memory.icon}</div>
-            <h3 className="text-2xl font-serif font-bold mb-3 text-green-600 dark:text-green-400">
+            <h3 className="text-2xl font-serif font-bold mb-3 text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
               {memory.title}
             </h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="text-white/90 leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.2)]">
               {memory.description}
             </p>
           </motion.div>

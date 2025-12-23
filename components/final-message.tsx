@@ -41,10 +41,15 @@ export default function FinalMessage() {
 
           <motion.div
             animate={{ y: [0, -10, 0] }}
-            transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
-            className="text-5xl"
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="flex justify-center items-center"
           >
-            💕
+            <img
+              src="https://i.gifer.com/y2.gif"
+              alt="Exciting GIF"
+              draggable={false}
+              className="w-38 h-auto scale-x-[-1]"
+            />
           </motion.div>
         </motion.div>
 
@@ -57,7 +62,7 @@ export default function FinalMessage() {
           <p className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
             All my love,
             <br />
-            <span className="text-2xl font-bold">Your Forever Person 💚</span>
+            <span className="text-2xl font-bold">Your Forever Person ❤️</span>
           </p>
         </motion.div>
       </div>
