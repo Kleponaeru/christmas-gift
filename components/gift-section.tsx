@@ -9,9 +9,9 @@ interface Gift {
   emoji: string;
   title: string;
   message: string;
-  image?: string; // Optional single image URL
-  images?: string[]; // Optional array of images that rotate
-  showSnowGlobe?: boolean; // Flag to show snow globe instead
+  image?: string;
+  images?: string[];
+  showSnowGlobe?: boolean;
 }
 
 const gifts: Gift[] = [
@@ -30,10 +30,11 @@ const gifts: Gift[] = [
     message:
       "You have the most beautiful smile that lights up my entire world. Thank you for sharing it with me.",
     images: [
-      "/path/to/smile1.jpg",
-      "/path/to/smile2.jpg",
-      "/path/to/smile3.jpg",
-      "/path/to/smile4.jpg",
+      "/gift-picture/smile-1.jpg",
+      "/gift-picture/smile-2.jpg",
+      "/gift-picture/smile-3.png",
+      "/gift-picture/smile-4.jpg",
+      "/gift-picture/smile-5.jpg",
     ],
   },
   {
@@ -42,7 +43,11 @@ const gifts: Gift[] = [
     title: "Adventures",
     message:
       "Every adventure with you is an unforgettable memory. I can't wait for all the places we'll explore together.",
-    image: "/path/to/your/image.jpg",
+    images: [
+      "/gift-picture/pict-tgt-1.jpg",
+      "/gift-picture/pict-tgt-2.jpg",
+      "/gift-picture/pict-tgt-3.jpg",
+    ]
   },
 ];
 
@@ -50,9 +55,8 @@ export default function GiftSection() {
   const [openedGift, setOpenedGift] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showLoveBombs, setShowLoveBombs] = useState(false);
-  const [loveBombKey, setLoveBombKey] = useState(0);
+  const [hoveredGift, setHoveredGift] = useState<number | null>(null);
 
-  // Change image every 3 seconds for image carousel
   useEffect(() => {
     const currentGift = gifts.find((g) => g.id === openedGift);
     if (currentGift?.images && currentGift.images.length > 0) {
@@ -63,36 +67,19 @@ export default function GiftSection() {
     }
   }, [openedGift]);
 
-  // Trigger love bombs when opening gift with images
-  // useEffect(() => {
-  //   const currentGift = gifts.find((g) => g.id === openedGift);
-  //   if (currentGift?.images && openedGift !== null) {
-  //     setShowLoveBombs(true);
-  //     const timeout = setTimeout(() => {
-  //       setShowLoveBombs(false);
-  //     }, 4000);
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }, [openedGift, loveBombKey]);
-
   const handleGiftClick = (giftId: number) => {
     if (openedGift === giftId) {
-      // Closing the gift - just close it normally, no bombs
       setOpenedGift(null);
       setCurrentImageIndex(0);
-      setShowLoveBombs(false); // Ensure bombs are off when closing
+      setShowLoveBombs(false);
     } else {
-      // Opening a gift
       setOpenedGift(giftId);
       setCurrentImageIndex(0);
 
-      // Trigger love bombs immediately for gifts with images
       const currentGift = gifts.find((g) => g.id === giftId);
       if (currentGift?.images) {
         setShowLoveBombs(true);
-        setLoveBombKey((prev) => prev + 1); // Force re-render of bombs
 
-        // Turn off bombs after animation
         setTimeout(() => {
           setShowLoveBombs(false);
         }, 4000);
@@ -100,7 +87,6 @@ export default function GiftSection() {
     }
   };
 
-  // Generate random love bombs
   const generateLoveBombs = () => {
     return Array.from({ length: 50 }, (_, i) => ({
       id: i,
@@ -116,7 +102,6 @@ export default function GiftSection() {
 
   return (
     <section className="py-20 px-4 max-w-6xl mx-auto relative">
-      {/* Full page love bombs - only show once when opening */}
       <AnimatePresence>
         {showLoveBombs && (
           <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
@@ -165,17 +150,36 @@ export default function GiftSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.2, duration: 0.6 }}
             onClick={() => handleGiftClick(gift.id)}
-            className="cursor-pointer"
+            onMouseEnter={() => setHoveredGift(gift.id)}
+            onMouseLeave={() => setHoveredGift(null)}
+            className="cursor-pointer relative"
           >
             <motion.div
               animate={{ y: [0, -5, 0] }}
               transition={{
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: Infinity,
                 duration: 2,
                 delay: index * 0.3,
               }}
-              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-all hover:bg-white/15 cursor-pointer min-h-48 flex flex-col items-center justify-center"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-all hover:bg-white/15 cursor-pointer min-h-48 flex flex-col items-center justify-center relative"
             >
+              {/* Click hint that appears on hover */}
+              {!openedGift && hoveredGift === gift.id && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white text-red-600 px-4 py-2 rounded-full text-sm font-semibold shadow-lg whitespace-nowrap"
+                >
+                  <motion.span
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ repeat: Infinity, duration: 1 }}
+                  >
+                    👆 Click me!
+                  </motion.span>
+                </motion.div>
+              )}
+
               {openedGift === gift.id ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -183,7 +187,6 @@ export default function GiftSection() {
                   transition={{ duration: 0.5 }}
                   className="w-full"
                 >
-                  {/* Show Snow Globe if specified */}
                   {gift.showSnowGlobe ? (
                     <div className="flex flex-col items-center text-white">
                       <div className="scale-[0.35] md:scale-50 -my-32 md:-my-24">
@@ -195,7 +198,6 @@ export default function GiftSection() {
                       <p className="text-sm leading-relaxed">{gift.message}</p>
                     </div>
                   ) : gift.images && gift.images.length > 0 ? (
-                    /* Show rotating images */
                     <div className="flex flex-col items-center text-white">
                       <div className="relative w-full max-w-sm h-64 mb-4 rounded-lg overflow-hidden">
                         <AnimatePresence mode="wait">
@@ -208,7 +210,8 @@ export default function GiftSection() {
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.5 }}
                             className="w-full h-full object-cover rounded-lg shadow-lg"
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               setCurrentImageIndex(
                                 (prev) => (prev + 1) % gift.images!.length
                               );
@@ -216,7 +219,6 @@ export default function GiftSection() {
                           />
                         </AnimatePresence>
 
-                        {/* Image indicators */}
                         <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
                           {gift.images.map((_, idx) => (
                             <div
@@ -237,7 +239,6 @@ export default function GiftSection() {
                       <p className="text-sm leading-relaxed">{gift.message}</p>
                     </div>
                   ) : gift.image ? (
-                    /* Show image if provided */
                     <div className="flex flex-col items-center text-white">
                       <img
                         src={gift.image}
@@ -250,7 +251,6 @@ export default function GiftSection() {
                       <p className="text-sm leading-relaxed">{gift.message}</p>
                     </div>
                   ) : (
-                    /* Show default message */
                     <div className="text-white">
                       <div className="text-6xl mb-4">✨</div>
                       <h3 className="text-2xl font-serif font-bold mb-4">
@@ -261,12 +261,11 @@ export default function GiftSection() {
                   )}
                 </motion.div>
               ) : (
-                /* Closed gift view */
                 <>
                   <motion.div
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{
-                      repeat: Number.POSITIVE_INFINITY,
+                      repeat: Infinity,
                       duration: 1.5,
                       delay: index * 0.3,
                     }}
@@ -275,6 +274,15 @@ export default function GiftSection() {
                     {gift.emoji}
                   </motion.div>
                   <p className="text-white font-serif text-xl">{gift.title}</p>
+                  
+                  {/* Always visible subtle hint */}
+                  <motion.p
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                    className="text-white/70 text-xs mt-2"
+                  >
+                    tap to open
+                  </motion.p>
                 </>
               )}
             </motion.div>

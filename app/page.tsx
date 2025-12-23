@@ -12,19 +12,53 @@ import SnowGlobe from "@/components/snow-globe";
 
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
-    // Set loading to false after component mounts
     setIsLoading(false);
-  }, []);
+    
+    // Function to start audio on first user interaction
+    const startAudio = () => {
+      if (!hasInteracted && audioRef.current && !isMuted) {
+        setHasInteracted(true);
+        const audio = audioRef.current;
+        audio.volume = 0;
+        audio.play().then(() => {
+          // Fade in effect
+          let volume = 0;
+          const fadeInInterval = setInterval(() => {
+            volume += 0.02;
+            if (volume >= 0.3) {
+              volume = 0.3;
+              clearInterval(fadeInInterval);
+            }
+            audio.volume = volume;
+          }, 100);
+        }).catch(() => {
+          console.log("Audio play failed");
+        });
+      }
+    };
+
+    // Listen for any user interaction
+    document.addEventListener('click', startAudio, { once: true });
+    document.addEventListener('touchstart', startAudio, { once: true });
+    document.addEventListener('keydown', startAudio, { once: true });
+
+    return () => {
+      document.removeEventListener('click', startAudio);
+      document.removeEventListener('touchstart', startAudio);
+      document.removeEventListener('keydown', startAudio);
+    };
+  }, [hasInteracted, isMuted]);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (!isMuted) {
+    if (!isMuted && hasInteracted) {
       // Fade in effect
       audio.volume = 0;
       audio.play().catch(() => {
@@ -40,10 +74,10 @@ export default function Home() {
         }
         audio.volume = volume;
       }, 100);
-    } else {
+    } else if (isMuted) {
       audio.pause();
     }
-  }, [isMuted]);
+  }, [isMuted, hasInteracted]);
 
   if (isLoading) return null;
 
