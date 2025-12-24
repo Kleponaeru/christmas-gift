@@ -45,6 +45,7 @@ export default function MemorySection() {
       <motion.h2
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6 }}
         className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
       >
@@ -58,6 +59,7 @@ export default function MemorySection() {
             initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1, duration: 0.6 }}
+            viewport={{ once: true }}
             whileHover={{ y: -5 }}
             className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-all hover:bg-white/15 cursor-pointer min-h-48 flex flex-col items-center justify-center"
           >

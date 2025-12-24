@@ -47,7 +47,7 @@ const gifts: Gift[] = [
       "/gift-picture/pict-tgt-1.jpg",
       "/gift-picture/pict-tgt-2.jpg",
       "/gift-picture/pict-tgt-3.jpg",
-    ]
+    ],
   },
 ];
 
@@ -137,6 +137,7 @@ export default function GiftSection() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
         className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
       >
         Gift 🎁
@@ -148,6 +149,7 @@ export default function GiftSection() {
             key={gift.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: index * 0.2, duration: 0.6 }}
             onClick={() => handleGiftClick(gift.id)}
             onMouseEnter={() => setHoveredGift(gift.id)}
@@ -274,7 +276,7 @@ export default function GiftSection() {
                     {gift.emoji}
                   </motion.div>
                   <p className="text-white font-serif text-xl">{gift.title}</p>
-                  
+
                   {/* Always visible subtle hint */}
                   <motion.p
                     animate={{ opacity: [0.5, 1, 0.5] }}

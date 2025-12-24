@@ -9,6 +9,7 @@ export default function FinalMessage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="mb-8"
         >
@@ -19,6 +20,7 @@ export default function FinalMessage() {
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-lg md:text-xl text-white dark:text-white leading-relaxed mb-8"
           >
@@ -31,6 +33,7 @@ export default function FinalMessage() {
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-lg md:text-xl text-white dark:text-white leading-relaxed mb-8"
           >
