@@ -87,9 +87,8 @@ export default function Home() {
   return (
     <main
       className="
-        min-h-screen
+        min-h-dvh
         bg-gradient-to-b from-red-700 via-red-600 to-red-800
-        dark:from-red-700 dark:via-red-600 dark:to-red-800
         overflow-hidden
       "
     >

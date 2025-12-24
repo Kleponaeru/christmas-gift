@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -74,9 +74,19 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+html,
+body {
+  min-height: 100%;
+  background: linear-gradient(to bottom, #b91c1c, #dc2626, #991b1b);
+}
+
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: "Geist", "Geist Fallback";
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
