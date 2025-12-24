@@ -18,39 +18,42 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(false);
-    
+
     // Function to start audio on first user interaction
     const startAudio = () => {
       if (!hasInteracted && audioRef.current && !isMuted) {
         setHasInteracted(true);
         const audio = audioRef.current;
         audio.volume = 0;
-        audio.play().then(() => {
-          // Fade in effect
-          let volume = 0;
-          const fadeInInterval = setInterval(() => {
-            volume += 0.02;
-            if (volume >= 0.3) {
-              volume = 0.3;
-              clearInterval(fadeInInterval);
-            }
-            audio.volume = volume;
-          }, 100);
-        }).catch(() => {
-          console.log("Audio play failed");
-        });
+        audio
+          .play()
+          .then(() => {
+            // Fade in effect
+            let volume = 0;
+            const fadeInInterval = setInterval(() => {
+              volume += 0.02;
+              if (volume >= 0.3) {
+                volume = 0.3;
+                clearInterval(fadeInInterval);
+              }
+              audio.volume = volume;
+            }, 100);
+          })
+          .catch(() => {
+            console.log("Audio play failed");
+          });
       }
     };
 
     // Listen for any user interaction
-    document.addEventListener('click', startAudio, { once: true });
-    document.addEventListener('touchstart', startAudio, { once: true });
-    document.addEventListener('keydown', startAudio, { once: true });
+    document.addEventListener("click", startAudio, { once: true });
+    document.addEventListener("touchstart", startAudio, { once: true });
+    document.addEventListener("keydown", startAudio, { once: true });
 
     return () => {
-      document.removeEventListener('click', startAudio);
-      document.removeEventListener('touchstart', startAudio);
-      document.removeEventListener('keydown', startAudio);
+      document.removeEventListener("click", startAudio);
+      document.removeEventListener("touchstart", startAudio);
+      document.removeEventListener("keydown", startAudio);
     };
   }, [hasInteracted, isMuted]);
 
@@ -82,7 +85,14 @@ export default function Home() {
   if (isLoading) return null;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-red-700 via-red-600 to-red-800 overflow-hidden">
+    <main
+      className="
+        min-h-screen
+        bg-gradient-to-b from-red-700 via-red-600 to-red-800
+        dark:from-red-700 dark:via-red-600 dark:to-red-800
+        overflow-hidden
+      "
+    >
       <SnowEffect />
 
       {/* Music Control Button */}
