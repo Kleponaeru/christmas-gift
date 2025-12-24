@@ -68,6 +68,9 @@ export default function GiftSection() {
   }, [openedGift]);
 
   const handleGiftClick = (giftId: number) => {
+    // Prevent scroll jump
+    const scrollY = window.scrollY;
+
     if (openedGift === giftId) {
       setOpenedGift(null);
       setCurrentImageIndex(0);
@@ -85,6 +88,11 @@ export default function GiftSection() {
         }, 4000);
       }
     }
+
+    // Restore scroll position after state update
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY);
+    });
   };
 
   const generateLoveBombs = () => {
@@ -136,8 +144,8 @@ export default function GiftSection() {
       <motion.h2
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
         viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
         className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
       >
         Gift 🎁
@@ -163,7 +171,8 @@ export default function GiftSection() {
                 duration: 2,
                 delay: index * 0.3,
               }}
-              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-all hover:bg-white/15 cursor-pointer min-h-48 flex flex-col items-center justify-center relative"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-all hover:bg-white/15 cursor-pointer flex flex-col items-center justify-center relative"
+              style={{ minHeight: openedGift === gift.id ? "auto" : "12rem" }}
             >
               {/* Click hint that appears on hover */}
               {!openedGift && hoveredGift === gift.id && (
