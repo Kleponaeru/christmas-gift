@@ -32,7 +32,7 @@ const gifts: Gift[] = [
     images: [
       "/gift-picture/smile-1.jpg",
       "/gift-picture/smile-2.jpg",
-      "/gift-picture/smile-3.png",
+      "/gift-picture/smile-3.jpg",
       "/gift-picture/smile-4.jpg",
       "/gift-picture/smile-5.jpg",
     ],
