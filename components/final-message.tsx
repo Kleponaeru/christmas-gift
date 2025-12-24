@@ -59,6 +59,7 @@ export default function FinalMessage() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.6, duration: 0.8 }}
           className="mt-12 pt-8 border-t border-red-200 dark:border-red-900"
         >
